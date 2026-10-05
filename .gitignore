@@ -1,0 +1,3 @@
+state/
+sentinel.conf
+*.log
