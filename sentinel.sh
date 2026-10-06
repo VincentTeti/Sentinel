@@ -17,16 +17,16 @@ status_word() {
     esac
 }
 
-declare -A STATUS MESSAGE                 
-declare -A RANK=([0]=0 [1]=1 [3]=2 [2]=3) 
-ORDER=()                                  
+declare -A STATUS MESSAGE
+declare -A RANK=([0]=0 [1]=1 [3]=2 [2]=3)
+ORDER=()
 worst=0
 
 log INFO "sentinel start"
 
 
 for f in "$CHECKS_DIR"/*.sh; do
-    [[ -e "$f" ]] || continue             # folder was empty, so the glob matched nothing
+    [[ -e "$f" ]] || continue
     name="$(basename "$f" .sh)"
 
     if [[ ! -x "$f" ]]; then
@@ -44,7 +44,7 @@ for f in "$CHECKS_DIR"/*.sh; do
         rc=3
     fi
 
-    out="${out%%$'\n'*}"                  # keep only the first line
+    out="${out%%$'\n'*}"
     [[ -n "$out" ]] || out="(no output)"
 
     STATUS[$name]=$rc
