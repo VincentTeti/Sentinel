@@ -4,18 +4,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 source "$SCRIPT_DIR/lib/common.sh"
+source "$SCRIPT_DIR/lib/state.sh"
+source "$SCRIPT_DIR/lib/heal.sh" 
 load_config "$SCRIPT_DIR/sentinel.conf"
 
 export DISK_WARN DISK_CRIT MEM_WARN MEM_CRIT LOAD_WARN LOAD_CRIT HTTP_URL NGINX_ACCESS_LOG ERR5XX_WARN ERR5XX_CRIT
 
-status_word() {
-    case "$1" in
-        0) echo "OK" ;;
-        1) echo "WARNING" ;;
-        2) echo "CRITICAL" ;;
-        *) echo "UNKNOWN" ;;
-    esac
-}
 
 declare -A STATUS MESSAGE
 declare -A RANK=([0]=0 [1]=1 [3]=2 [2]=3)
@@ -50,6 +44,9 @@ for f in "$CHECKS_DIR"/*.sh; do
     STATUS[$name]=$rc
     MESSAGE[$name]="$out"
     ORDER+=("$name")
+
+    update_state "$name" "$rc" "$out"
+    maybe_heal "$name" "$rc"
 
     if (( ${RANK[$rc]} > ${RANK[$worst]} )); then
         worst=$rc

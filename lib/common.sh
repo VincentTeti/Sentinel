@@ -32,4 +32,33 @@ load_config() {
     : "${DISK_CRIT:?DISK_CRIT is missing in $conf_file}"
     : "${MEM_WARN:?MEM_WARN is missing in $conf_file}"
     : "${MEM_CRIT:?MEM_CRIT is missing in $conf_file}"
+    : "${AUTO_HEAL:?AUTO_HEAL is missing in $conf_file}"
+    : "${HEAL_MAX:?HEAL_MAX is missing in $conf_file}"
+    : "${HEAL_WINDOW:?HEAL_WINDOW is missing in $conf_file}"
+}
+
+
+notify() {
+    local subject="${1//$'\n'/ }"
+    local body="$2"
+
+    if [[ "${DRY_RUN:-0}" == "1" ]]; then
+        log INFO "DRY RUN notify: [$subject] $body"
+        return 0
+    fi
+
+    if ! printf 'To: %s\nSubject: %s\n\n%s\n' "$ALERT_EMAIL" "$subject" "$body" | msmtp "$ALERT_EMAIL"; then
+        log ERROR "failed to send email: $subject"
+    fi
+    return 0
+}
+
+
+status_word() {
+    case "$1" in
+        0) echo "OK" ;;
+        1) echo "WARNING" ;;
+        2) echo "CRITICAL" ;;
+        *) echo "UNKNOWN" ;;
+    esac
 }
