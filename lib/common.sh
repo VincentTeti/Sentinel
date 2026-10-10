@@ -35,6 +35,8 @@ load_config() {
     : "${AUTO_HEAL:?AUTO_HEAL is missing in $conf_file}"
     : "${HEAL_MAX:?HEAL_MAX is missing in $conf_file}"
     : "${HEAL_WINDOW:?HEAL_WINDOW is missing in $conf_file}"
+    : "${WEB_DIR:?WEB_DIR not set in sentinel.conf}"
+    : "${HISTORY_FILE:?HISTORY_FILE not set in sentinel.conf}"
 }
 
 

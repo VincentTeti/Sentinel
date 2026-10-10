@@ -5,7 +5,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 source "$SCRIPT_DIR/lib/common.sh"
 source "$SCRIPT_DIR/lib/state.sh"
-source "$SCRIPT_DIR/lib/heal.sh" 
+source "$SCRIPT_DIR/lib/heal.sh"
+source "$SCRIPT_DIR/lib/report.sh"
 load_config "$SCRIPT_DIR/sentinel.conf"
 
 export DISK_WARN DISK_CRIT MEM_WARN MEM_CRIT LOAD_WARN LOAD_CRIT HTTP_URL NGINX_ACCESS_LOG ERR5XX_WARN ERR5XX_CRIT
@@ -61,6 +62,10 @@ printf '%-22s %-10s %s\n' "CHECK" "STATUS" "MESSAGE"
 for name in "${ORDER[@]}"; do
     printf '%-22s %-10s %s\n' "$name" "$(status_word "${STATUS[$name]}")" "${MESSAGE[$name]}"
 done
+
+write_history
+write_json
+write_html
 
 log INFO "sentinel finished: worst status $(status_word "$worst")"
 exit "$worst"
