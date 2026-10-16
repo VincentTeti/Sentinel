@@ -1,0 +1,8 @@
+[Unit]
+Description=Sentinel server health check
+
+[Service]
+Type=oneshot
+User=admin_mjumbe
+WorkingDirectory=/home/admin_mjumbe/sentinel
+ExecStart=/home/admin_mjumbe/sentinel/sentinel.sh

@@ -1,0 +1,9 @@
+/home/admin_mjumbe/sentinel/sentinel.log /home/admin_mjumbe/sentinel/state/history.csv {
+    weekly
+    rotate 4
+    compress
+    missingok
+    notifempty
+    create 0644 admin_mjumbe admin_mjumbe
+    su admin_mjumbe admin_mjumbe
+}

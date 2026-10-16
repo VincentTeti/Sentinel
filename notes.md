@@ -17,3 +17,10 @@ confirmed problem	problem	if now - LAST_ALERT >= COOLDOWN, send a reminder
 confirmed problem	OK	send one "recovered after X minutes" message, then reset
 
 Sudo rule limits Sentinel to restarting nginx so run a test with sudo -k first because sudo cachees the password for 15 minutes. 
+
+
+LOG_FILE="$HOME/sentinel/sentinel.log"
+STATE_DIR="$HOME/sentinel/state"
+WEB_DIR=/var/www/sentinel
+HISTORY_FILE="$STATE_DIR/history.csv"
+LOCK_FILE="/tmp/sentinel.lock"
