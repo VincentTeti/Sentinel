@@ -7,7 +7,7 @@ source "$SCRIPT_DIR/lib/common.sh"
 source "$SCRIPT_DIR/lib/state.sh"
 source "$SCRIPT_DIR/lib/heal.sh"
 source "$SCRIPT_DIR/lib/report.sh"
-load_config "$SCRIPT_DIR/sentinel.conf"
+load_config "${SENTINEL_CONF:-$SCRIPT_DIR/sentinel.conf}"
 
 export DISK_WARN DISK_CRIT MEM_WARN MEM_CRIT LOAD_WARN LOAD_CRIT HTTP_URL NGINX_ACCESS_LOG ERR5XX_WARN ERR5XX_CRIT
 

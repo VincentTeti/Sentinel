@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 declare -A UPTIME=()
 declare -A COLOR=([OK]="#2e7d32" [WARNING]="#ef6c00" [CRITICAL]="#c62828" [UNKNOWN]="#757575")
 write_history() {

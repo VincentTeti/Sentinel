@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 read_state() {
     local name="$1"
     local file="$STATE_DIR/$name.state"

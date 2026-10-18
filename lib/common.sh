@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 log() {
     local level="$1"
     local message="$2"
@@ -20,7 +21,7 @@ load_config() {
         exit 1
     fi
 
-    
+     # shellcheck source=/dev/null  # config path is only known at run time
     source "$conf_file"
 
     
